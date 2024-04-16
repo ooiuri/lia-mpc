@@ -1,0 +1,23 @@
+[0.013s] Invoking command in '/home/iuri/Github/lia-mpc/code/build/my_package': CMAKE_PREFIX_PATH=/opt/ros/iron /usr/bin/cmake /home/iuri/Github/lia-mpc/code/src/my_package -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/iuri/Github/lia-mpc/code/install/my_package
+[0.023s] -- Found ament_cmake: 2.0.4 (/opt/ros/iron/share/ament_cmake/cmake)
+[0.186s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.198s] -- Found ament_lint_auto: 0.14.3 (/opt/ros/iron/share/ament_lint_auto/cmake)
+[0.245s] Traceback (most recent call last):
+[0.246s]   File "/opt/ros/iron/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py", line 22, in <module>
+[0.247s]     from catkin_pkg.package import parse_package_string
+[0.247s] ModuleNotFoundError: No module named 'catkin_pkg'
+[0.257s] [31mCMake Error at /opt/ros/iron/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:95 (message):
+[0.258s]   execute_process(/usr/local/bin/python3.11
+[0.258s]   /opt/ros/iron/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py
+[0.258s]   /home/iuri/Github/lia-mpc/code/src/my_package/package.xml
+[0.258s]   /home/iuri/Github/lia-mpc/code/build/my_package/ament_cmake_core/package.cmake)
+[0.259s]   returned error code 1
+[0.259s] Call Stack (most recent call first):
+[0.259s]   /opt/ros/iron/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:49 (_ament_package_xml)
+[0.259s]   /opt/ros/iron/share/ament_lint_auto/cmake/ament_lint_auto_find_test_dependencies.cmake:31 (ament_package_xml)
+[0.259s]   CMakeLists.txt:23 (ament_lint_auto_find_test_dependencies)
+[0.260s] 
+[0.260s] [0m
+[0.264s] -- Configuring incomplete, errors occurred!
+[0.264s] See also "/home/iuri/Github/lia-mpc/code/build/my_package/CMakeFiles/CMakeOutput.log".
+[0.267s] Invoked command in '/home/iuri/Github/lia-mpc/code/build/my_package' returned '1': CMAKE_PREFIX_PATH=/opt/ros/iron /usr/bin/cmake /home/iuri/Github/lia-mpc/code/src/my_package -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/iuri/Github/lia-mpc/code/install/my_package

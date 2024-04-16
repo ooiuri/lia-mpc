@@ -1,0 +1,1 @@
+/home/iuri/Github/lia-mpc/code/build/my_package/ament_cmake_environment_hooks/local_setup.bash

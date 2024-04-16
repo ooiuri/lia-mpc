@@ -1,0 +1,23 @@
+[0.015s] Invoking command in '/home/iuri/Github/lia-mpc/code/build/my_package': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/iron /usr/bin/cmake --build /home/iuri/Github/lia-mpc/code/build/my_package -- -j4 -l4
+[0.037s] Invoked command in '/home/iuri/Github/lia-mpc/code/build/my_package' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/iron /usr/bin/cmake --build /home/iuri/Github/lia-mpc/code/build/my_package -- -j4 -l4
+[0.064s] Invoking command in '/home/iuri/Github/lia-mpc/code/build/my_package': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/iron /usr/bin/cmake --install /home/iuri/Github/lia-mpc/code/build/my_package
+[0.067s] -- Install configuration: ""
+[0.067s] -- Execute custom install script
+[0.068s] -- Symlinking: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/launch/listener.launch.py
+[0.072s] -- Symlinking: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/launch/talker.launch.py
+[0.076s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/ament_index/resource_index/package_run_dependencies/my_package
+[0.077s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/ament_index/resource_index/parent_prefix_path/my_package
+[0.077s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/environment/ament_prefix_path.sh
+[0.077s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/environment/ament_prefix_path.dsv
+[0.078s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/environment/path.sh
+[0.078s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/environment/path.dsv
+[0.078s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/local_setup.bash
+[0.079s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/local_setup.sh
+[0.079s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/local_setup.zsh
+[0.079s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/local_setup.dsv
+[0.080s] -- Symlinking: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/package.dsv
+[0.084s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/ament_index/resource_index/packages/my_package
+[0.085s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/cmake/my_packageConfig.cmake
+[0.085s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/cmake/my_packageConfig-version.cmake
+[0.085s] -- Up-to-date symlink: /home/iuri/Github/lia-mpc/code/install/my_package/share/my_package/package.xml
+[0.087s] Invoked command in '/home/iuri/Github/lia-mpc/code/build/my_package' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/iron /usr/bin/cmake --install /home/iuri/Github/lia-mpc/code/build/my_package
