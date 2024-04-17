@@ -40,13 +40,6 @@
     </joint>
 
     <link name="chassis">
-        <!-- <visual>
-            <origin xyz="0.09 0 0.05"/>
-            <geometry>
-                <box size="0.18 0.10 0.10"/>
-            </geometry>
-            <material name="yellow"/>
-        </visual> -->
         <visual>
             <origin xyz="0.075 0 0"/>
             <!-- adding lia mesh -->
@@ -56,13 +49,13 @@
             <material name="yellow"/>
         </visual>
         <collision>
-            <origin xyz="0.15 0 0.075"/>
+            <origin xyz="0.075 0 0"/>
             <geometry>
-                <box size="0.3 0.3 0.15"/>
+                <mesh filename="package://lia_robot/meshes/lia_chassis.stl"/>
             </geometry>
         </collision>
-        <xacro:inertial_box mass="0.5" x="0.3" y="0.3" z="0.15">
-            <origin xyz="0.15 0 0.075" rpy="0 0 0"/>
+        <xacro:inertial_box mass="0.5" x="0.18" y="0.10" z="0.10">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
     
@@ -84,10 +77,10 @@
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.025" length="0.05"/>
+                <cylinder radius="0.025" length="0.01"/>
             </geometry>
         </collision>
-        <xacro:inertial_cylinder mass="0.1" length="0.05" radius="0.025">
+        <xacro:inertial_cylinder mass="0.1" length="0.01" radius="0.025">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
@@ -110,17 +103,17 @@
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.025" length="0.05"/>
+                <cylinder radius="0.025" length="0.01"/>
             </geometry>
         </collision>
-        <xacro:inertial_cylinder mass="0.1" length="0.05" radius="0.025">
+        <xacro:inertial_cylinder mass="0.1" length="0.01" radius="0.025">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
 
    
 
-    <!-- CASTER WHEEL LINK -->
+    <!-- FIRST CASTER WHEEL LINK -->
 
     <joint name="caster_wheel_joint" type="fixed">
         <parent link="chassis"/>
@@ -138,10 +131,37 @@
         </visual>
         <collision>
             <geometry>
-                <sphere radius="0.01"/>
+                <sphere radius="0.005"/>
             </geometry>
         </collision>
-        <xacro:inertial_sphere mass="0.1" radius="0.01">
+        <xacro:inertial_sphere mass="0.1" radius="0.005">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
+    </link>
+   
+
+    <!-- SECOND CASTER WHEEL LINK -->
+
+    <joint name="caster_wheel_joint2" type="fixed">
+        <parent link="chassis"/>
+        <child link="caster_wheel2"/>
+        <origin xyz="0.205 0 -0.0075"/>
+    </joint>
+
+
+    <link name="caster_wheel2">
+        <visual>
+            <geometry>
+                <sphere radius="0.005"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.005"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_sphere mass="0.1" radius="0.005">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
