@@ -183,8 +183,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "78085924532745b7",
+  "active": "36cb349e9d5d09fd",
   "lastOpenFiles": [
+    "imgs/lia_teleop.jpg",
+    "videos/Lia_teleop_circle.mp4",
+    "videos",
+    "New Folder",
+    "imgs/ros2teleoperation.png",
     "1. Setup.md",
     "2. Configuring Simulation.md",
     "Intro.md",
