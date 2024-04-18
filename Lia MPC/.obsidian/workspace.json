@@ -185,11 +185,11 @@
   },
   "active": "78085924532745b7",
   "lastOpenFiles": [
-    "imgs/Lia_URDF_BOTTOM.png",
-    "Intro.md",
-    "imgs/Lia_URDF.png",
-    "imgs",
+    "1. Setup.md",
     "2. Configuring Simulation.md",
-    "1. Setup.md"
+    "Intro.md",
+    "imgs/Lia_URDF_BOTTOM.png",
+    "imgs/Lia_URDF.png",
+    "imgs"
   ]
 }
