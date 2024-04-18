@@ -1,2 +1,0 @@
-Invoking command in '/home/iuri/Github/lia-mpc/code/build/my_package': CMAKE_PREFIX_PATH=/opt/ros/iron /usr/bin/cmake /home/iuri/Github/lia-mpc/code/src/my_package -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/iuri/Github/lia-mpc/code/install/my_package
-Invoked command in '/home/iuri/Github/lia-mpc/code/build/my_package' returned '1': CMAKE_PREFIX_PATH=/opt/ros/iron /usr/bin/cmake /home/iuri/Github/lia-mpc/code/src/my_package -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/iuri/Github/lia-mpc/code/install/my_package

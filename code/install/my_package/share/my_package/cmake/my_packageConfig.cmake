@@ -1,1 +1,0 @@
-/home/iuri/Github/lia-mpc/code/build/my_package/ament_cmake_core/my_packageConfig.cmake

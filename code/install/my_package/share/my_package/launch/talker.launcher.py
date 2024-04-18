@@ -1,1 +1,0 @@
-/home/iuri/Github/lia-mpc/code/src/my_package/launch/talker.launcher.py
