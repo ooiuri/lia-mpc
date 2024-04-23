@@ -209,9 +209,10 @@
   },
   "active": "9915d8df474d5ef3",
   "lastOpenFiles": [
-    "0. Intro.md",
-    "4. Controlling Robot.md",
     "3. Configuring the Raspberry (doing).md",
+    "4. Controlling Robot.md",
+    "1. Setup.md",
+    "0. Intro.md",
     "2. Configuring Simulation.md",
     "Untitled",
     "imgs/lia_teleop.jpg",
@@ -219,7 +220,6 @@
     "videos",
     "New Folder",
     "imgs/ros2teleoperation.png",
-    "1. Setup.md",
     "imgs/Lia_URDF_BOTTOM.png",
     "imgs/Lia_URDF.png",
     "imgs"
