@@ -3,8 +3,8 @@
 <package format="3">
   <name>lia_robot</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="my_email@email.com">Josh Newans</maintainer>
+  <description>Lia Robot - A robot that self drives</description>
+  <maintainer email="oiuri@outlook.com">Iuri Reis</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -14,5 +14,10 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <!-- gazebo_ros_paths_plugin automatically adds these to
+        GAZEBO_PLUGIN_PATH and GAZEBO_MODEL_PATH when you do this export inside
+        the package.xml file. You can than use URIs of type model://my_package/stuff. -->
+    <!-- <gazebo_ros gazebo_model_path="${prefix}/.."/> -->
+    <!-- <gazebo_ros gazebo_model_path="~/.gazebo/"/> -->
   </export>
 </package>

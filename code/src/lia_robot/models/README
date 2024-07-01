@@ -1,0 +1,4 @@
+Copy the folders here with a symlink
+to your ~/.gazebo/models
+
+ln -s $PWD/interlagos ~/.gazebo/models
