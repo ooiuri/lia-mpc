@@ -42,14 +42,40 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='Interlagos'>
+    <state world_name='default'>
+      <sim_time>583 483000000</sim_time>
+      <real_time>573 703039397</real_time>
+      <wall_time>1720022224 736416017</wall_time>
+      <iterations>389353</iterations>
+      <model name='Interlagos_0'>
+        <pose>11.4837 2.24875 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>11.4837 2.24875 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>80.1363 -97.5007 97.7665 -0 0.647643 2.75219</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='Interlagos_0'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>25 25</size>
+              <size>100 100</size>
             </plane>
           </geometry>
           <surface>
@@ -74,7 +100,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>25 25</size>
+              <size>50 50</size>
             </plane>
           </geometry>
           <material>
@@ -89,33 +115,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.640089 -1.51973 0 0 -0 0</pose>
+      <pose>11.4837 2.24875 0 0 -0 0</pose>
     </model>
-    <state world_name='default'>
-      <sim_time>194 130000000</sim_time>
-      <real_time>206 17067438</real_time>
-      <wall_time>1719373626 586251296</wall_time>
-      <iterations>194130</iterations>
-      <model name='Interlagos'>
-        <pose>0.640089 -1.51973 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose>0.640089 -1.51973 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <light name='sun'>
-        <pose>0 0 10 0 -0 0</pose>
-      </light>
-    </state>
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>12.231 -11.3811 4.96497 0 0.275643 2.35619</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
-      </camera>
-    </gui>
   </world>
 </sdf>
