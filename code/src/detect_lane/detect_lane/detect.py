@@ -4,6 +4,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg        import Image
 from geometry_msgs.msg      import Point
+from std_msgs.msg           import Int16MultiArray
 from cv_bridge              import CvBridge, CvBridgeError
 from detect_lane.process_image import detect_lane_image
 
@@ -16,7 +17,7 @@ class Detect_lane(Node):
         self.image_sub = self.create_subscription(Image,"/image_in",self.callback,rclpy.qos.QoSPresetProfiles.SENSOR_DATA.value)
         self.image_out_pub = self.create_publisher(Image, "/image_out", 1)
         self.image_tuning_pub = self.create_publisher(Image, "/image_tuning", 1)
-        self.lane_pub  = self.create_publisher(Point,"/detected_lane",1)
+        self.detected_points_pub  = self.create_publisher(Int16MultiArray,"/detected_points",1)
         self.bridge = CvBridge()
 
 
@@ -28,9 +29,8 @@ class Detect_lane(Node):
 
         try:
             
-            out_image = detect_lane_image(cv_image)
+            out_image, detected_points = detect_lane_image(cv_image)
             # keypoints_norm, out_image, tuning_image = proc.find_circles(cv_image, self.tuning_params)
-            print("Publishing image")
             img_to_pub = self.bridge.cv2_to_imgmsg(out_image, "bgr8")
             img_to_pub.header = data.header
             self.image_out_pub.publish(img_to_pub)
@@ -38,25 +38,11 @@ class Detect_lane(Node):
             # img_to_pub = self.bridge.cv2_to_imgmsg(tuning_image, "bgr8")
             # img_to_pub.header = data.header
             # self.image_tuning_pub.publish(img_to_pub)
+ 
+            points_out = Int16MultiArray()
+            points_out.data = detected_points
 
-            # point_out = Point()
-
-            # Keep the biggest point
-            # They are already converted to normalised coordinates
-            # for i, kp in enumerate(keypoints_norm):
-            #     x = kp.pt[0]
-            #     y = kp.pt[1];
-            #     s = kp.size
-
-            #     self.get_logger().info(f"Pt {i}: ({x},{y},{s})")
-
-            #     if (s > point_out.z):                    
-            #         point_out.x = x
-            #         point_out.y = y
-            #         point_out.z = s
-
-            # if (point_out.z > 0):
-            #     self.lane_pub.publish(point_out) 
+            self.detected_points_pub.publish(points_out) 
         except CvBridgeError as e:
             print(e)  
 
