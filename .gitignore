@@ -1,2 +1,5 @@
 code/build/**
 code/build/my_package
+**.pyc
+**/__pycache__
+*/__pycache__/

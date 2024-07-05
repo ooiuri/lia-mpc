@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
 
-upper_limit = 130
-bottom_limit = 250
+upper_limit = 300
+bottom_limit = 480
 
 # --------------------------------
 def SliceImage(img, n_slices):
@@ -45,7 +45,7 @@ class ImageClass:
         ret, thresh = cv2.threshold(imgray,100,255,cv2.THRESH_BINARY_INV) #Get Threshold
         # edges = cv2.Canny(imgray,50,150,apertureSize=3)
         # blurred = cv2.medianBlur(imgray, 9)
-        # thresh = cv2.bitwise_not(thresh)
+        thresh = cv2.bitwise_not(thresh)
         self.contours, _ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE) #Get contour
         
         self.prev_MC = self.MainContour
@@ -79,7 +79,7 @@ def detect_lane_image(image):
     # Read image
     # img = cv2.imread('assets/01/frame0001.jpg')
     img = image
-    parts = SliceImage(img, 6)
+    parts = SliceImage(img, 12)
 
     part_list = []
     part_list.append(parts[0])
