@@ -95,8 +95,12 @@
             "id": "821d92cb62a320d9",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "5. Model Predictive Controller.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ],
@@ -166,7 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0. Intro.md",
+                "file": "5. Model Predictive Controller.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +187,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "0. Intro.md",
+                "file": "5. Model Predictive Controller.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +210,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0. Intro.md"
+                "file": "5. Model Predictive Controller.md"
               }
             }
           }
@@ -229,11 +233,11 @@
   },
   "active": "821d92cb62a320d9",
   "lastOpenFiles": [
+    "3. Configuring the Raspberry (doing).md",
+    "5. Model Predictive Controller.md",
     "2024-07-22.md",
     "4. Controlling Robot.md",
-    "5. Model Predictive Controller.md",
     "Untitled",
-    "3. Configuring the Raspberry (doing).md",
     "2. Configuring Simulation.md",
     "1. Setup.md",
     "0. Intro.md",
