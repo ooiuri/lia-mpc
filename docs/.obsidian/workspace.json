@@ -90,9 +90,17 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "821d92cb62a320d9",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -158,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "5. Model Predictive Controller.md",
+                "file": "0. Intro.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "5. Model Predictive Controller.md",
+                "file": "0. Intro.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "5. Model Predictive Controller.md"
+                "file": "0. Intro.md"
               }
             }
           }
@@ -219,8 +227,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0d73493f16148117",
+  "active": "821d92cb62a320d9",
   "lastOpenFiles": [
+    "2024-07-22.md",
     "4. Controlling Robot.md",
     "5. Model Predictive Controller.md",
     "Untitled",
