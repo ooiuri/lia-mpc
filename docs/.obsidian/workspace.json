@@ -4,95 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "dd198d76ecb4c229",
+        "id": "2b08f96085f82d66",
         "type": "tabs",
         "children": [
           {
-            "id": "58e26b524902fffa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "0. Intro.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b3bfc828785547fd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "0. Intro.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2a57f7cccfc116b4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. Setup.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "78085924532745b7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. Configuring Simulation.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "40f7797d0d342882",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3. Configuring the Raspberry (doing).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9915d8df474d5ef3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4. Controlling Robot.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0d73493f16148117",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "5. Model Predictive Controller.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "821d92cb62a320d9",
+            "id": "4254b8494174be74",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -103,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 7
+        ]
       }
     ],
     "direction": "vertical"
@@ -231,16 +146,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "821d92cb62a320d9",
+  "active": "36cb349e9d5d09fd",
   "lastOpenFiles": [
-    "3. Configuring the Raspberry (doing).md",
-    "5. Model Predictive Controller.md",
-    "2024-07-22.md",
-    "4. Controlling Robot.md",
-    "Untitled",
-    "2. Configuring Simulation.md",
-    "1. Setup.md",
     "0. Intro.md",
+    "1. Setup.md",
+    "2. Configuring Simulation.md",
+    "3. Configuring the Raspberry (doing).md",
+    "4. Controlling Robot.md",
+    "5. Model Predictive Controller.md",
+    "extras.md",
+    "Untitled",
+    "2024-07-22.md",
     "imgs/lia_teleop.jpg",
     "videos/Lia_teleop_circle.mp4",
     "videos",

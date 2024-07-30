@@ -7,7 +7,7 @@ class ImageClass:
         self.image_out = None
         self.contourCenterX = 0
         self.MainContour = None
-        self.n_slices = 6
+        self.n_slices = 10
         self.image_slices = []
         self.detected_points = []
         self.upper_limit = 130
