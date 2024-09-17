@@ -933,7 +933,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/iuri/Github/lia-mpc/code/install/lia_robot/share/lia_robot/meshes/lia_chassis.stl</uri>
+              <uri>file:///home/iuri/Github/lia-mpc/code/install/lia_robot/share/lia_robot/meshes/lia_car_chassis_v2.stl</uri>
             </mesh>
           </geometry>
           <material>

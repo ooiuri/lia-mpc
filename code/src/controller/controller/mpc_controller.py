@@ -100,6 +100,6 @@ class MPCController:
 
         # Solver
         solver = SolverFactory('ipopt')
-        result = solver.solve(model, tee=False)
+        result = solver.solve(model, tee=True)
 
         return model.v_R[0].value, model.v_L[0].value
