@@ -10,8 +10,8 @@ class ImageClass:
         self.n_slices = 10
         self.image_slices = []
         self.detected_points = []
-        self.upper_limit = 130
-        self.bottom_limit = 225
+        self.upper_limit = 235
+        self.bottom_limit = 335
     
     def slice_image(self, n_slices):
         ''' Function to split image into slices \n

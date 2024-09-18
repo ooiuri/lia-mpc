@@ -24,6 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'detect = detect_lane.detect:main',
+            'process_points = detect_lane.process_points:main',
         ],
     },
 )
