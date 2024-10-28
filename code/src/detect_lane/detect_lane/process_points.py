@@ -6,16 +6,20 @@ import cv2
 import numpy as np
 import time
 
+from visualization_msgs.msg import Marker
+from geometry_msgs.msg import Point
+
 class PixelToRealWorld(Node):
     def __init__(self):
         super().__init__('pixel_to_real_world')
 
         self.subscription = self.create_subscription(
             Image,
-            '/image_raw',  # Altere para o tópico de sua câmera
+            '/camera/image_raw',  # Altere para o tópico de sua câmera
             self.image_callback,
             10)
         
+        self.marker_publisher = self.create_publisher(Marker, 'visualization_marker', 10)
         self.bridge = CvBridge()
         
         # Matriz intrínseca e coeficientes de distorção fornecidos
@@ -53,6 +57,8 @@ class PixelToRealWorld(Node):
             # Desenhar o ponto clicado na imagem e manter por 3 segundos
             self.draw_click_point(x, y, Xc, Zc)
 
+            # Publicar marker no RViz
+            self.publish_marker(Xc, Zc)
             # Atualizar o tempo do último clique
             self.last_click_time = time.time()
 
@@ -98,6 +104,35 @@ class PixelToRealWorld(Node):
         # Manter o texto e o ponto visíveis por 3 segundos
         cv2.imshow("Undistorted Camera Image", self.image)
         cv2.waitKey(30000)  # Exibir por 3000 milissegundos (3 segundos)
+
+    def publish_marker(self, X, Z):
+        # Criação do marker
+        marker = Marker()
+        marker.header.frame_id = "base_link"  # Defina o frame de referência adequado ao seu sistema
+        marker.header.stamp = self.get_clock().now().to_msg()
+
+        marker.ns = "clicked_points"
+        marker.id = 0
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+
+        # Define a posição do marker no mundo real
+        marker.pose.position.x = Z
+        marker.pose.position.y = X  # Se você quiser fixar o ponto no chão
+        marker.pose.position.z = 0.0
+
+        # Escala e cor do marker
+        marker.scale.x = 0.05  # Tamanho da esfera (em metros)
+        marker.scale.y = 0.05
+        marker.scale.z = 0.05
+
+        marker.color.a = 1.0  # Alpha (transparência)
+        marker.color.r = 0.0
+        marker.color.g = 1.0
+        marker.color.b = 0.0
+
+        # Publica o marker
+        self.marker_publisher.publish(marker)
 
 def main(args=None):
     rclpy.init(args=args)
