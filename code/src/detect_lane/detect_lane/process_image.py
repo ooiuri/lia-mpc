@@ -246,9 +246,9 @@ def plot_trajetory(image, traj_ref):
     proc = ImageClass(image)
     traj_points = []
     for point in traj_ref:
-        res = proc.real_world_to_pixel(point[0], point[1])
+        res = proc.real_world_to_pixel(point[1], point[0])
         traj_points.append(res)
-    # print('traj_points: ', traj_points)
+    print('traj_points: ', traj_points)
     for i in range(1, len(traj_points)):
         start_point = traj_points[i - 1]
         end_point = traj_points[i]

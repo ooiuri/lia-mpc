@@ -33,18 +33,18 @@ class ControlRobot(Node):
         self.bridge = CvBridge()
 
         # Parâmetros do robô
-        self.R = 0.1  # Raio da roda em metros
-        self.L = 0.5  # Distância entre as rodas em metros
+        self.R = 0.05  # Raio da roda em metros
+        self.L = 0.09  # Distância entre as rodas em metros
         # Criar instância do robô diferencial
         robot = DifferentialDriveRobot(self.R, self.L)
         
         # Criar instância do controlador MPC
-        self.mpc = MPCController(robot, N=10, Q=1, R=0.025, dt=1, max_margin=0.2)
+        self.mpc = MPCController(robot, N=10, Q=1, R=0.0, dt=3, max_margin=0.2)
 
         timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.lastrcvtime = time.time() - 10000
-        self.rcv_timeout_secs = 10.0
+        self.rcv_timeout_secs = 1
 
     def timer_callback(self):
         msg = Twist()
@@ -61,20 +61,22 @@ class ControlRobot(Node):
                 Yc.append(point[1])
             
             # print('after Xc: ', Xc)
-            x_initial = np.linspace(0, Xc[0], 5)
-            y_initial = np.linspace(0, Yc[0], 5)
+            x_initial = np.linspace(0, Xc[0], 8)
+            y_initial = np.linspace(0, Yc[0], 8)
 
+            # x_traj = x_initial[1:-1]
+            # y_traj = y_initial[1:-1]
             # Concatena a trajetória inicial com os pontos de referênci
-            x_traj = np.concatenate((x_initial[:-1], Xc))
-            y_traj = np.concatenate((y_initial[:-1], Yc))
+            x_traj = np.concatenate((x_initial[1:-1], Xc))
+            y_traj = np.concatenate((y_initial[1:-1], Yc))
             print(f'x_traj: {(x_traj)} \t y_traj: {(y_traj)}')
 
             v_R, v_L, mpc_traj = self.mpc.solve(y_traj, x_traj)
             print(f'v_R: {v_R} \t v_L: {v_L}')
             # print(f'mpc_traj: {mpc_traj}')
             # v_linear = self.R / 2 *(v_R + v_L)
-            v_linear = (v_R + v_L) / 2
-            w_angular = (v_R - v_L) / self.L # correct one
+            v_linear = (v_R + v_L) * self.R / 2
+            w_angular = (v_R - v_L) * self.R / self.L # correct one
             msg.linear.x = v_linear
             msg.angular.z = w_angular
 

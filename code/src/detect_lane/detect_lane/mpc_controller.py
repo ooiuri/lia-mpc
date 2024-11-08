@@ -94,32 +94,32 @@ class MPCController:
 
         # Limites das variáveis de controle
         def control_limits_rule_R(model, t):
-            return (-1, model.v_R[t], 1)
+            return (-20, model.v_R[t], 20)
         
         def control_limits_rule_L(model, t):
-            return (-1, model.v_L[t], 1)
+            return (-20, model.v_L[t], 20)
 
         model.control_limits_R = pyo.Constraint(range(model.N), rule=control_limits_rule_R)
         model.control_limits_L = pyo.Constraint(range(model.N), rule=control_limits_rule_L)
 
         # Hausdorff_constraint of margin
-        def hausdorff_constraint(model):
-            # Listas de pontos da trajetória atual e da referência
-            traj_pred = [(model.x[i].value, model.y[i].value) for i in range(self.N)]
-            traj_ref = [(model.x_ref[i], model.y_ref[i]) for i in range(self.N)]
+        # def hausdorff_constraint(model):
+        #     # Listas de pontos da trajetória atual e da referência
+        #     traj_pred = [(model.x[i].value, model.y[i].value) for i in range(self.N)]
+        #     traj_ref = [(model.x_ref[i], model.y_ref[i]) for i in range(self.N)]
 
-            # Calcula a Distância de Hausdorff em ambas direções
-            hd_dist_1 = directed_hausdorff(traj_pred, traj_ref)[0]
-            hd_dist_2 = directed_hausdorff(traj_ref, traj_pred)[0]
+        #     # Calcula a Distância de Hausdorff em ambas direções
+        #     hd_dist_1 = directed_hausdorff(traj_pred, traj_ref)[0]
+        #     hd_dist_2 = directed_hausdorff(traj_ref, traj_pred)[0]
             
-            # Define a Distância de Hausdorff como o máximo entre as duas direções
-            model.hausdorff_dist.set_value(max(hd_dist_1, hd_dist_2))
+        #     # Define a Distância de Hausdorff como o máximo entre as duas direções
+        #     model.hausdorff_dist.set_value(max(hd_dist_1, hd_dist_2))
 
-            # Restrições para garantir que a Distância de Hausdorff fique dentro do limite
-            return model.hausdorff_dist <= self.max_margin
+        #     # Restrições para garantir que a Distância de Hausdorff fique dentro do limite
+        #     return model.hausdorff_dist <= self.max_margin
 
-        # Adiciona a restrição de Hausdorff ao modelo
-        model.hausdorff_constraint = pyo.Constraint(rule=hausdorff_constraint)
+        # # Adiciona a restrição de Hausdorff ao modelo
+        # model.hausdorff_constraint = pyo.Constraint(rule=hausdorff_constraint)
 
         # Solver
         solver = SolverFactory('ipopt')
@@ -133,4 +133,6 @@ class MPCController:
         out_v_L = [model.v_L[i]() for i in range(self.N)]
         print('out_X', out_X)
         print('out_Y', out_Y)
-        return model.v_R[0].value, model.v_L[0].value, [out_X, out_Y]
+        print('out_v_R', out_v_R)
+        print('out_v_L', out_v_L)
+        return -model.v_R[0].value, model.v_L[0].value, [out_X, out_Y]
