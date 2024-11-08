@@ -25,6 +25,7 @@ setup(
         'console_scripts': [
             'detect = detect_lane.detect:main',
             'process_points = detect_lane.process_points:main',
+            'controller = detect_lane.control_robot:main',
         ],
     },
 )

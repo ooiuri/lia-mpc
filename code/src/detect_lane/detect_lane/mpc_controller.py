@@ -77,7 +77,8 @@ class MPCController:
             cost = 0
             for t in range(model.N):
                 cost += model.Q * ((model.x[t] - model.x_ref[t])**2 + (model.y[t] - model.y_ref[t])**2)
-                cost += model.R * (model.v_R[t]**2 + model.v_L[t]**2)
+                # cost += model.R * (model.v_R[t]**2 + model.v_L[t]**2)
+                cost += model.R * ((model.v_R[t] - model.v_L[t])**2)
             return cost
         
         model.objective = pyo.Objective(rule=objective_rule, sense=pyo.minimize)
@@ -128,4 +129,8 @@ class MPCController:
         out_X = [model.x[i]() for i in range(self.N)]
         out_Y = [model.y[i]() for i in range(self.N)]
 
+        out_v_R = [model.v_R[i]() for i in range(self.N)]
+        out_v_L = [model.v_L[i]() for i in range(self.N)]
+        print('out_X', out_X)
+        print('out_Y', out_Y)
         return model.v_R[0].value, model.v_L[0].value, [out_X, out_Y]

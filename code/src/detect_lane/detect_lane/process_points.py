@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
+from std_msgs.msg           import Int16MultiArray, Float32MultiArray, MultiArrayDimension
 from cv_bridge import CvBridge
 import cv2
 import numpy as np

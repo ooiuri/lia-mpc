@@ -1,22 +1,32 @@
 import numpy as np
 import cv2
 
+import matplotlib.pyplot as plt
+
 class ImageClass:
-    def __init__(self, image):
+    def __init__(self, image, upper_limit=130, bottom_limit=225, n_slices=6):
+        """Inicializa a classe com a imagem e parâmetros opcionais.
+        
+        Args:
+            image (numpy.ndarray): A imagem a ser processada.
+            upper_limit (int): Limite superior para o fatiamento da imagem.
+            bottom_limit (int): Limite inferior para o fatiamento da imagem.
+            n_slices (int): Número de fatias desejadas.
+        """
+        if image is None or not isinstance(image, np.ndarray):
+            raise ValueError("A imagem fornecida não é válida.")
+        
         self.image = image
         self.image_out = None
         self.contourCenterX = 0
         self.MainContour = None
-        self.n_slices = 5
-        self.detected_points_center = []
+        self.n_slices = n_slices
+        self.image_slices = []
+        self.slice_size = None
+        self.detected_points_offset = []
         self.detected_points = []
-        # Real robot coordinates
-        # self.upper_limit = 235
-        # self.bottom_limit = 335
-
-        # Simulated robot coordinates
-        self.upper_limit = 100
-        self.bottom_limit = 235
+        self.upper_limit = upper_limit
+        self.bottom_limit = bottom_limit
 
         # Matriz intrínseca e coeficientes de distorção fornecidos
         self.intrinsic_matrix = np.array([[774.608099, 0.0, 342.430253], 
@@ -28,104 +38,139 @@ class ImageClass:
         self.camera_angle = np.radians(15)  # Inclinação da câmera em radianos
         self.camera_distance = 0.125  # Distância da câmera até a frente do robô
         self.clicked_point = None
+        
+    
+    def slice_image(self):
+        """Divide a imagem em fatias e armazena em self.image_slices."""
+        img = self.image
+        height, width = img.shape[:2]
+        slice_height = self.bottom_limit - self.upper_limit
+        self.slice_size = int(slice_height / self.n_slices)
+        
+        # Adiciona a fatia superior
+        self.image_slices.append(img[0:self.upper_limit, 0:width]) 
+        
+        # Adiciona as fatias intermediárias
+        for i in range(self.n_slices):
+            part = self.upper_limit + self.slice_size * i
+            crop_img = img[part:part + self.slice_size, 0:width]
+            self.image_slices.append(crop_img)
 
-    def slice_roi(self, roi, n_slices):
-        height, width = roi.shape[:2]
-        slice_height = height // n_slices
-        slices = []
-        for i in range(n_slices):
-            start_row = i * slice_height
-            end_row = (i + 1) * slice_height if i < n_slices - 1 else height
-            roi_slice = roi[start_row:end_row, :]
-            slices.append(roi_slice)
-        return slices
-
-    def repack_image(self, slices):
-        img = slices[0]
-        for slice_img in slices[1:]:
-            img = np.concatenate((img, slice_img), axis=0)
-        img_full = np.concatenate((self.image[:self.upper_limit, :], img), axis=0)
-        img_full = np.concatenate((img_full, self.image[self.bottom_limit:, :]), axis=0)
-        return img_full
+        # Adiciona a fatia inferior
+        self.image_slices.append(img[self.bottom_limit:height, 0:width]) 
+        
+        return self.image_slices
+    
+    def repack_image(self):
+        """Recombina as fatias de volta em uma única imagem."""
+        img = self.image_slices[0]
+        for i in range(1, len(self.image_slices)):
+            img = np.concatenate((img, self.image_slices[i]), axis=0)
+        return img
 
     def process_image(self):
-        img_roi = self.image[self.upper_limit:self.bottom_limit, :]
-        roi_slices = self.slice_roi(img_roi, self.n_slices)
-        
-        for i, roi_slice in enumerate(roi_slices):
-            imgray = cv2.cvtColor(roi_slice, cv2.COLOR_BGR2GRAY)
-            _, thresh = cv2.threshold(imgray, 100, 255, cv2.THRESH_BINARY_INV)
-            # thresh = cv2.bitwise_not(thresh)  # Inverter pixels para linha preta em fundo claro
+        """Processa a imagem, encontra contornos e calcula offsets."""
+        # Começa dividindo a imagem em fatias
+        self.slice_image()
 
-            contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        for index in reversed(range(len(self.image_slices[1:-1]))):
+            image_slice = self.image_slices[1 + index]
+            imgray = cv2.cvtColor(image_slice, cv2.COLOR_BGR2GRAY)  # Converte para escala de cinza
+            ret, thresh = cv2.threshold(imgray, 100, 255, cv2.THRESH_BINARY_INV)  # Aplica limiar
+            contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)  # Obtém contornos
+            
+            self.prev_MC = self.MainContour
+            self.prev_MCX = self.contourCenterX
+            
             if contours:
                 self.MainContour = self.findMainContour(contours)
+                height, width = image_slice.shape[:2]
+
+                self.middleX = int(width / 2)  # Coordenada X do ponto médio
+                self.middleY = int(height / 2)  # Coordenada Y do ponto médio
+                
                 contourCenter = self.getContourCenter(self.MainContour)
-                if contourCenter:
+                if contourCenter:    
                     self.contourCenterX = contourCenter[0]
-                    width = roi_slice.shape[1]
-                    center_offset = contourCenter[0] - width // 2
-                    self.detected_points_center.append(center_offset)
-
-                    # Converter as coordenadas do centro do contorno para a imagem completa
-                    global_center = (contourCenter[0], contourCenter[1] + self.upper_limit + i * (roi_slice.shape[0]))
-                    # Salvar coordenadas do centro da imagem
-                    self.detected_points.append(global_center)
-
-                    # Desenhar o contorno e o ponto azul na imagem original
-                    cv2.drawContours(self.image, [self.MainContour + np.array([[0, self.upper_limit + i * (roi_slice.shape[0])]])], -1, (0, 255, 0), 2)
-                    cv2.circle(self.image, global_center, 3, (255, 0, 0), -1)
+                    cv2.drawContours(image_slice, self.MainContour, -1, (0, 255, 0), 1)  # Desenha o contorno
+                    cv2.circle(image_slice, (self.contourCenterX, self.middleY), 3, (255, 255, 255), -1)  # Desenha círculo branco
+                    cv2.circle(image_slice, (self.middleX, self.middleY), 1, (0, 0, 255), -1)  # Desenha círculo vermelho
                     
-                    # Adicionar o texto das coordenadas do ponto na imagem original
-                    text_position = (global_center[0] + 5, global_center[1] - 5)
-                    cv2.putText(self.image, f"({global_center[0]}, {global_center[1]})", 
-                                text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), 1)
+                    point_offset = self.middleX - self.contourCenterX
+                    # print('point_offset: ', point_offset)    
+                    u = self.contourCenterX
+                    v = index * self.slice_size + self.upper_limit + self.slice_size // 2
+                    self.detected_points.append([u,v])
+                    # cv2.putText(image_slice, str(point_offset), (self.contourCenterX + 10, self.middleY + 5), cv2.FONT_HERSHEY_COMPLEX, .5, (255, 255, 255))
+                    cv2.putText(image_slice, f'({round(u, 2)},{round(v, 2)})', (self.contourCenterX + 10, self.middleY + 5), cv2.FONT_HERSHEY_COMPLEX, .5, (255, 255, 255))
+                    self.detected_points_offset.append(point_offset)
 
-            # Ponto branco de referência no centro do slice na imagem original
-            slice_height = roi_slice.shape[0]
-            slice_center = (width // 2, slice_height // 2 + self.upper_limit + i * slice_height)
-            cv2.circle(self.image, slice_center, 3, (255, 255, 255), -1)
-
-        self.image_out = self.image
+        self.image_out = self.repack_image()
         final_height, final_width = self.image_out.shape[:2]
         cv2.line(self.image_out, (0, self.bottom_limit), (final_width, self.bottom_limit), (0, 0, 255), 2)
         cv2.line(self.image_out, (0, self.upper_limit), (final_width, self.upper_limit), (0, 0, 255), 2)
+        
+        # Exibe a imagem processada
+        # self.display_image(self.image_out)
 
     def findMainContour(self, contours):
+        """Encontra o contorno principal com base na área e na posição.
+        
+        Args:
+            contours (list): Lista de contornos detectados.
+
+        Returns:
+            numpy.ndarray: O contorno principal encontrado.
+        """
         biggestContour = max(contours, key=cv2.contourArea)
-
-        # Verifique se o contorno está abaixo da linha preta
-        contourCenter = self.getContourCenter(biggestContour)
-        if contourCenter and contourCenter[1] > self.bottom_limit:  # Certifique-se de que Y está abaixo da linha
-            return biggestContour
-
-        if self.detected_points_center:
-            if self.getContourCenter(biggestContour):
+        if len(self.detected_points_offset):
+            if self.getContourCenter(biggestContour):    
                 biggestContourX = self.getContourCenter(biggestContour)[0]
-                if abs((self.contourCenterX - biggestContourX) - self.detected_points_center[-1]) > 50:
-                    closest_contour = biggestContour
-                    closest_contourX = biggestContourX
-                    for contour in contours:
-                        contourCenter = self.getContourCenter(contour)
-                        if contourCenter and contourCenter[1] > self.bottom_limit:  # Verificar a linha
-                            temp_contourX = contourCenter[0]
-                            if abs((self.contourCenterX - temp_contourX) - self.detected_points_center[-1]) < \
-                               abs((self.contourCenterX - closest_contourX) - self.detected_points_center[-1]):
-                                closest_contour = contour
-                                closest_contourX = temp_contourX
-                    return closest_contour
+                if abs((self.middleX - biggestContourX) - self.detected_points_offset[-1]) > 50:
+                    contour = biggestContour
+                    contourX = biggestContourX
+                    for tmp_contour in contours:
+                        if self.getContourCenter(tmp_contour):
+                            temp_contourX = self.getContourCenter(tmp_contour)[0]
+                            if abs(((self.middleX - temp_contourX) - self.detected_points_offset[-1]) < 
+                                    abs(((self.middleX - contourX) - self.detected_points_offset[-1]))):
+                                contour = tmp_contour
+                                contourX = temp_contourX
+                    return contour
                 else:
                     return biggestContour
-        return biggestContour
+        else:
+            return biggestContour
 
     def getContourCenter(self, contour):
+        """Calcula o centro de um contorno.
+        
+        Args:
+            contour (numpy.ndarray): O contorno para o qual o centro será calculado.
+
+        Returns:
+            list: Coordenadas [x, y] do centro do contorno.
+        """
         M = cv2.moments(contour)
+        
         if M["m00"] == 0:
-            return None
+            return [0, 0]
+        
         x = int(M["m10"] / M["m00"])
         y = int(M["m01"] / M["m00"])
+        
         return [x, y]
-    
+
+    def display_image(self, img):
+        """Exibe a imagem usando Matplotlib.
+        
+        Args:
+            img (numpy.ndarray): A imagem a ser exibida.
+        """
+        plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        plt.axis('off')
+        plt.show()
+
     def pixel_to_real_world(self, u, v):
         """Function to translate pixel coordinate to real world distance"""
 
@@ -152,10 +197,40 @@ class ImageClass:
         # Calcula a distância no plano XZ (Z positivo no mundo real)
         Zc = self.camera_height / np.tan(total_theta)
         Xc = Zc * dx / fx
-
         distance_of_robot = Zc - self.camera_distance
         
-        return Xc, distance_of_robot
+        return [Xc, distance_of_robot]
+    
+    def real_world_to_pixel(self, Xc, distance_of_robot):
+        """Function to translate real world coordinates (X, Z) to pixel coordinates (u, v)"""
+        # Ajuste da distância do robô para a câmera
+        fx = self.intrinsic_matrix[0, 0]  # f_x
+        fy = self.intrinsic_matrix[1, 1]  # f_y
+        
+        Zc = distance_of_robot + self.camera_distance
+        dx = Xc * fx / Zc
+
+        # Calcula o ângulo vertical em relação ao plano XZ
+        total_theta = np.arctan2(self.camera_height, Zc)
+        alfa_y = total_theta - self.camera_angle
+
+        dy = np.tan(alfa_y) * fy
+        # Verifica se o ângulo é válido
+        if alfa_y <= 0:
+            alfa_y = 1e-5  # Previne divisões por zero
+
+        v_distorted = dy / fy
+        u_distorted = dx / fx
+
+        # Aplica a distorção para coordenadas de pixel (u, v)
+        # Aplica a distorção para coordenadas de pixel (u, v)
+        # Prepara os pontos para a projeção
+        cx = self.intrinsic_matrix[0][2]
+        cy = self.intrinsic_matrix[1][2]
+
+        u = cx + dx 
+        v = cy + dy 
+        return int(u), int(v)
 
 def detect_lane_image(image):    
     proc = ImageClass(image)
@@ -166,3 +241,17 @@ def detect_lane_image(image):
         processed_points.append(res)
 
     return proc.image_out, processed_points
+
+def plot_trajetory(image, traj_ref):
+    proc = ImageClass(image)
+    traj_points = []
+    for point in traj_ref:
+        res = proc.real_world_to_pixel(point[0], point[1])
+        traj_points.append(res)
+    # print('traj_points: ', traj_points)
+    for i in range(1, len(traj_points)):
+        start_point = traj_points[i - 1]
+        end_point = traj_points[i]
+        cv2.line(image, start_point, end_point, color=(100, 100, 200), thickness=2) 
+        cv2.drawMarker(image, traj_points[i], (255, 100, 0), cv2.MARKER_CROSS, 10)
+    return image
