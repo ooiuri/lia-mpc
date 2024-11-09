@@ -39,11 +39,11 @@ class ControlRobot(Node):
         robot = DifferentialDriveRobot(self.R, self.L)
         
         # Criar instância do controlador MPC
-        self.mpc = MPCController(robot, N=10, Q=1, R=0.0, dt=3, max_margin=0.2)
+        self.mpc = MPCController(robot, N=10, Q=1, R=0.0, dt=0.3, max_margin=0.2)
 
-        timer_period = 1  # seconds
+        timer_period = 0.6  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
-        self.lastrcvtime = time.time() - 10000
+        self.lastrcvtime = time.time() - 2000
         self.rcv_timeout_secs = 1
 
     def timer_callback(self):
@@ -57,21 +57,24 @@ class ControlRobot(Node):
             Yc = []
             # print('before Xc: ', self.detected_points_data)
             for point in self.detected_points_data:
-                Xc.append(point[0])
-                Yc.append(point[1])
+                Xc.append(point[1])
+                Yc.append(-point[0]/10)
             
             # print('after Xc: ', Xc)
-            x_initial = np.linspace(0, Xc[0], 8)
-            y_initial = np.linspace(0, Yc[0], 8)
+            x_initial = np.linspace(0, Xc[0], 10)
+            y_initial = np.linspace(0, Yc[0], 10)
+            # x_initial = np.linspace(0, 0.36, 10)
+            # y_initial = np.linspace(0, 0, 12)
 
             # x_traj = x_initial[1:-1]
             # y_traj = y_initial[1:-1]
             # Concatena a trajetória inicial com os pontos de referênci
-            x_traj = np.concatenate((x_initial[1:-1], Xc))
-            y_traj = np.concatenate((y_initial[1:-1], Yc))
-            print(f'x_traj: {(x_traj)} \t y_traj: {(y_traj)}')
+            x_traj = x_initial # np.concatenate((x_initial[0:-1]))
+            y_traj = y_initial # np.concatenate((y_initial[0:-1]))
+            print(f'x_traj: {(x_traj)}')
+            print(f'y_traj: {(y_traj)}')
 
-            v_R, v_L, mpc_traj = self.mpc.solve(y_traj, x_traj)
+            v_R, v_L, mpc_traj = self.mpc.solve(x_traj, y_traj)
             print(f'v_R: {v_R} \t v_L: {v_L}')
             # print(f'mpc_traj: {mpc_traj}')
             # v_linear = self.R / 2 *(v_R + v_L)

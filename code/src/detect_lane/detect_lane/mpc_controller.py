@@ -135,4 +135,4 @@ class MPCController:
         print('out_Y', out_Y)
         print('out_v_R', out_v_R)
         print('out_v_L', out_v_L)
-        return -model.v_R[0].value, model.v_L[0].value, [out_X, out_Y]
+        return model.v_R[0].value, model.v_L[0].value, [out_X, out_Y]
