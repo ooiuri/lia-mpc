@@ -13,10 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2. Configuring Simulation.md",
+                "file": "3. Configuring the Raspberry (doing).md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "3. Configuring the Raspberry (doing)"
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -54,7 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -62,14 +68,17 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "9640a3d954feb1a4",
@@ -85,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2. Configuring Simulation.md",
+                "file": "3. Configuring the Raspberry (doing).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +102,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 3. Configuring the Raspberry (doing)"
             }
           },
           {
@@ -102,10 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2. Configuring Simulation.md",
+                "file": "3. Configuring the Raspberry (doing).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 3. Configuring the Raspberry (doing)"
             }
           },
           {
@@ -116,7 +129,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -125,8 +140,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2. Configuring Simulation.md"
-              }
+                "file": "3. Configuring the Raspberry (doing).md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 3. Configuring the Raspberry (doing)"
             }
           }
         ]
@@ -146,13 +163,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "36cb349e9d5d09fd",
+  "active": "4254b8494174be74",
   "lastOpenFiles": [
+    "5. Model Predictive Controller.md",
+    "2. Configuring Simulation.md",
     "imgs/LIA_CAR.png",
     "0. Intro.md",
     "1. Setup.md",
-    "2. Configuring Simulation.md",
-    "5. Model Predictive Controller.md",
     "3. Configuring the Raspberry (doing).md",
     "4. Controlling Robot.md",
     "extras.md",
