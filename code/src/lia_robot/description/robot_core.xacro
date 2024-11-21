@@ -8,7 +8,7 @@
     </material>
 
     <material name="orange">
-        <color rgba="1 0.3 0.1 1"/>
+        <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
     </material>
 
     <material name="blue">
@@ -51,6 +51,7 @@
             <geometry>
                 <mesh filename="file://$(find lia_robot)/meshes/lia_car_chassis_v2.stl"/>
                 <!-- <box size="0.22 0.10 0.05"/> -->
+                <!-- <mesh filename="package://lia_robot/meshes/lia_car_chassis_v2.stl"/> -->
             </geometry>
             <material name="orange"/>
         </visual>
@@ -68,7 +69,7 @@
     </link>
 
     <gazebo reference="chassis">
-        <material>Gazebo/DarkYellow</material>
+        <material>Gazebo/Orange</material>
         <!-- <material>Gazebo/deeporange</material> -->
     </gazebo>
     
@@ -86,7 +87,7 @@
             <geometry>
                 <cylinder radius="0.025" length="0.01"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -99,7 +100,7 @@
     </link>
    
     <gazebo reference="left_wheel">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/White</material>
     </gazebo>
 
     <!-- RIGHT WHEEL LINK -->
@@ -116,7 +117,7 @@
             <geometry>
                 <cylinder radius="0.025" length="0.01"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -129,7 +130,7 @@
     </link>
 
    <gazebo reference="right_wheel">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/White</material>
     </gazebo>
 
     <!-- FIRST CASTER WHEEL LINK -->
@@ -195,5 +196,16 @@
         <mu1 value="0.001" />
         <mu2 value="0.001" />
     </gazebo>
+
+    <gazebo>
+        <plugin filename="libgazebo_ros_p3d.so" name="lia_groundtruth_sim">
+        <update_rate>100.0</update_rate>
+        <body_name>base_link</body_name>
+        <topic_name>ground_truth/state</topic_name>
+        <gaussian_noise>0.0</gaussian_noise>
+        <frame_name>map</frame_name>
+      </plugin>
+    </gazebo>
+  
     
 </robot>

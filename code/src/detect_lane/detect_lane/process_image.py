@@ -29,10 +29,14 @@ class ImageClass:
         self.bottom_limit = bottom_limit
 
         # Matriz intrínseca e coeficientes de distorção fornecidos
-        self.intrinsic_matrix = np.array([[774.608099, 0.0, 342.430253], 
-                                          [0.0, 774.119900, 264.814194], 
+        # self.intrinsic_matrix = np.array([[774.608099, 0.0, 342.430253], 
+        #                                   [0.0, 774.119900, 264.814194], 
+        #                                   [0.0, 0.0, 1.0]])
+        self.intrinsic_matrix = np.array([[747.477148, 0.0, 281.589364], 
+                                          [0.0, 747.474690, 226.732107], 
                                           [0.0, 0.0, 1.0]])
-        self.dist_coeffs = np.array([0.102414, -0.221511, 0.013876, 0.019191, 0.0])
+        # self.dist_coeffs = np.array([0.102414, -0.221511, 0.013876, 0.019191, 0.0])
+        self.dist_coeffs = np.array([0.107080, -0.325658, 0.001122, -0.016761, 0.000000])
 
         self.camera_height = 0.12  # Altura da câmera em metros
         self.camera_angle = np.radians(15)  # Inclinação da câmera em radianos
@@ -76,7 +80,7 @@ class ImageClass:
         for index in reversed(range(len(self.image_slices[1:-1]))):
             image_slice = self.image_slices[1 + index]
             imgray = cv2.cvtColor(image_slice, cv2.COLOR_BGR2GRAY)  # Converte para escala de cinza
-            ret, thresh = cv2.threshold(imgray, 100, 255, cv2.THRESH_BINARY_INV)  # Aplica limiar
+            ret, thresh = cv2.threshold(imgray, 20, 255, cv2.THRESH_BINARY_INV)  # Aplica limiar
             contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)  # Obtém contornos
             
             self.prev_MC = self.MainContour
@@ -246,12 +250,13 @@ def plot_trajetory(image, traj_ref):
     proc = ImageClass(image)
     traj_points = []
     for point in traj_ref:
-        res = proc.real_world_to_pixel(point[1], point[0])
+        # res = proc.real_world_to_pixel(point[1], point[0])
+        res = proc.real_world_to_pixel(-point[1], point[0])
         traj_points.append(res)
     print('traj_points: ', traj_points)
     for i in range(1, len(traj_points)):
         start_point = traj_points[i - 1]
         end_point = traj_points[i]
-        cv2.line(image, start_point, end_point, color=(100, 100, 200), thickness=2) 
+        cv2.line(image, start_point, end_point, color=(100, 100, 200), thickness=8) 
         cv2.drawMarker(image, traj_points[i], (255, 100, 0), cv2.MARKER_CROSS, 10)
     return image

@@ -52,9 +52,10 @@ class PixelToRealWorld(Node):
     def on_mouse_click(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
             self.clicked_point = (x, y)
-            print(f"Clicked at pixel: {self.clicked_point}")
+            # print(f"Clicked at pixel: {self.clicked_point}")
             Xc, Zc = self.pixel_to_real_world(x, y)
-            print(f"Real world position (X: {Xc:.2f}, Z: {Zc:.2f})")
+            # print(f"Real world position (X: {Xc:.2f}, Z: {Zc:.2f})")
+            print(Xc, Zc)
             # Desenhar o ponto clicado na imagem e manter por 3 segundos
             self.draw_click_point(x, y, Xc, Zc)
 

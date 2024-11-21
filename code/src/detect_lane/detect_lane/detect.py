@@ -23,6 +23,8 @@ class Detect_lane(Node):
         self.marker_pub = self.create_publisher(Marker, 'visualization_marker', 10)
         self.bridge = CvBridge()
 
+        self.last_detected_points = []
+
     def publish_marker(self, data):
         # Criação do marker
         marker = Marker()
@@ -60,6 +62,13 @@ class Detect_lane(Node):
         try:
             
             out_image, detected_points = detect_lane_image(cv_image)
+
+            if len(detected_points) < 2:
+                detected_points = self.last_detected_points
+                print('detected points < 2')
+            else:
+                self.last_detected_points = detected_points
+            
             # keypoints_norm, out_image, tuning_image = proc.find_circles(cv_image, self.tuning_params)
             img_to_pub = self.bridge.cv2_to_imgmsg(out_image, "bgr8")
             img_to_pub.header = data.header
